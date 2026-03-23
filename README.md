@@ -230,6 +230,9 @@ See [portfolio-projects/README.md](portfolio-projects/README.md).
 ## Additional docs
 
 - [testing-strategy.md](docs/testing-strategy.md)
+- [test-operations-notes.md](docs/test-operations-notes.md)
+- [tradeoffs.md](docs/tradeoffs.md)
+- [adr/README.md](docs/adr/README.md)
 - [framework-comparison.md](docs/framework-comparison.md)
 - [debugging-guide.md](docs/debugging-guide.md)
 - [aws-ready.md](docs/aws-ready.md)
