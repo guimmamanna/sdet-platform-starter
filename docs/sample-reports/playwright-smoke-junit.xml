@@ -1,0 +1,8 @@
+<testsuites id="" name="" tests="2" failures="0" skipped="0" errors="0" time="7.365759">
+<testsuite name="smoke/login.spec.ts" timestamp="2026-03-23T18:32:02.300Z" hostname="chromium" tests="2" failures="0" skipped="0" time="3.531" errors="0">
+<testcase name="authentication smoke coverage › @smoke @ui seeded user can sign in and view inventory" classname="smoke/login.spec.ts" time="2.003">
+</testcase>
+<testcase name="authentication smoke coverage › @smoke @ui invalid credentials surface a user-facing error" classname="smoke/login.spec.ts" time="1.528">
+</testcase>
+</testsuite>
+</testsuites>

@@ -1,5 +1,11 @@
 # sdet-platform-starter
 
+[![Pull Request Checks](https://github.com/guimmamanna/sdet-platform-starter/actions/workflows/pr.yml/badge.svg)](https://github.com/guimmamanna/sdet-platform-starter/actions/workflows/pr.yml)
+[![Main Branch](https://github.com/guimmamanna/sdet-platform-starter/actions/workflows/main.yml/badge.svg)](https://github.com/guimmamanna/sdet-platform-starter/actions/workflows/main.yml)
+[![Nightly Regression](https://github.com/guimmamanna/sdet-platform-starter/actions/workflows/nightly-regression.yml/badge.svg)](https://github.com/guimmamanna/sdet-platform-starter/actions/workflows/nightly-regression.yml)
+[![Latest Release](https://img.shields.io/github/v/release/guimmamanna/sdet-platform-starter)](https://github.com/guimmamanna/sdet-platform-starter/releases)
+[![License](https://img.shields.io/github/license/guimmamanna/sdet-platform-starter)](LICENSE)
+
 Production-style SDET portfolio monorepo showcasing modern quality engineering across UI automation, API testing, contract verification, performance testing, security scanning, Dockerized execution, and CI/CD design.
 
 **Primary stack:** Playwright, Cypress, Selenium, pytest, TypeScript, Python, Pact, k6, OWASP ZAP, Docker, GitHub Actions, Buildkite, AWS-ready CI
@@ -17,6 +23,23 @@ Built for hiring managers and engineering leaders reviewing a mid-level SDET por
 - Docker Compose execution for a local app-plus-smoke-suite workflow
 - GitHub Actions, Buildkite, and AWS CodeBuild examples for delivery automation
 - Recruiter-friendly documentation focused on engineering tradeoffs, scaling, and operational realism
+
+## Visual Preview
+
+### Demo target landing page
+
+![Demo login screen](docs/assets/demo-login.png)
+
+### Authenticated inventory workspace
+
+![Demo inventory workspace](docs/assets/demo-inventory.png)
+
+## Sample Artifacts
+
+- [Sample report index](docs/sample-reports/README.md)
+- [API smoke JUnit example](docs/sample-reports/api-smoke-junit.xml)
+- [Playwright smoke JUnit example](docs/sample-reports/playwright-smoke-junit.xml)
+- [k6 smoke summary example](docs/sample-reports/k6-smoke-summary.json)
 
 ## Architecture
 

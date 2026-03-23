@@ -1,0 +1,3 @@
+Playwright smoke summary
+2 tests passed
+Artifacts available in CI: HTML report, trace, screenshot, video on failure
