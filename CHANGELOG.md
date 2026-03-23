@@ -8,15 +8,19 @@ The format follows Keep a Changelog principles and uses semantic versioning-styl
 
 ### Added
 
-- Architecture decision records under `docs/adr/`
-- Tradeoff writeup and operating notes for suite design and maintenance
-- Milestone-driven roadmap structure intended to mirror active GitHub planning
+- Planned roadmap work is tracked through the public GitHub milestones and issue backlog.
 
 ## [1.1.0] - 2026-03-23
 
 ### Added
 
 - Root README improvements for stronger GitHub landing-page presentation
+- GitHub Actions and release badges in the README
+- Checked-in screenshots for the demo target login and authenticated inventory views
+- Checked-in sample smoke artifacts for API, Playwright, and k6 runs
+- Architecture decision records under `docs/adr/`
+- Tradeoff writeup and test operations notes for suite design and maintenance
+- Milestone-driven roadmap structure with linked public backlog documentation
 - Additional SDET project expansion tracks under `portfolio-projects/`
 - GitHub repository description, topics, and recruiter-facing repository framing
 
@@ -34,4 +38,3 @@ The format follows Keep a Changelog principles and uses semantic versioning-styl
 - OWASP ZAP baseline scan wrapper
 - Docker, GitHub Actions, Buildkite, and AWS CodeBuild examples
 - Recruiter-facing documentation, governance files, and portfolio expansion tracks
-
