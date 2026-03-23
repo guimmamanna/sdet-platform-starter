@@ -1,6 +1,10 @@
 # sdet-platform-starter
 
-A production-style public portfolio repository for a mid-level Software Development Engineer in Test role. It demonstrates modern quality engineering across UI automation, API testing, contract verification, performance testing, security scanning, Dockerized execution, and CI/CD design against a shared demo target.
+Production-style SDET portfolio monorepo showcasing modern quality engineering across UI automation, API testing, contract verification, performance testing, security scanning, Dockerized execution, and CI/CD design.
+
+**Primary stack:** Playwright, Cypress, Selenium, pytest, TypeScript, Python, Pact, k6, OWASP ZAP, Docker, GitHub Actions, Buildkite, AWS-ready CI
+
+Built for hiring managers and engineering leaders reviewing a mid-level SDET portfolio. The repository uses one shared demo target and demonstrates how browser, API, contract, performance, security, and delivery concerns fit together in a practical automation platform.
 
 ## What this repository demonstrates
 
