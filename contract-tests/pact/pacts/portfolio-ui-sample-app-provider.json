@@ -1,0 +1,164 @@
+{
+  "consumer": {
+    "name": "portfolio-ui"
+  },
+  "interactions": [
+    {
+      "description": "a request for matching inventory items",
+      "providerStates": [
+        {
+          "name": "inventory has matching items"
+        }
+      ],
+      "request": {
+        "headers": {
+          "Authorization": "Bearer test-token"
+        },
+        "matchingRules": {
+          "header": {
+            "Authorization": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "^Bearer .*$"
+                }
+              ]
+            }
+          }
+        },
+        "method": "GET",
+        "path": "/api/items",
+        "query": {
+          "q": [
+            "provider"
+          ]
+        }
+      },
+      "response": {
+        "body": {
+          "count": 1,
+          "items": [
+            {
+              "createdAt": "2026-01-01T00:00:00.000Z",
+              "description": "Generated for Pact provider verification.",
+              "id": "item-123",
+              "owner": "standard_user",
+              "status": "active",
+              "tags": [
+                "contract"
+              ],
+              "title": "Provider contract item",
+              "updatedAt": "2026-01-01T00:00:00.000Z"
+            }
+          ]
+        },
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "matchingRules": {
+          "body": {
+            "$.count": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.items": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type",
+                  "min": 1
+                }
+              ]
+            },
+            "$.items[*].createdAt": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.items[*].description": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.items[*].id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.items[*].owner": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.items[*].status": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.items[*].tags": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type",
+                  "min": 1
+                }
+              ]
+            },
+            "$.items[*].title": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            },
+            "$.items[*].updatedAt": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          }
+        },
+        "status": 200
+      }
+    }
+  ],
+  "metadata": {
+    "pact-js": {
+      "version": "15.0.1"
+    },
+    "pactRust": {
+      "ffi": "0.4.28",
+      "models": "1.3.5"
+    },
+    "pactSpecification": {
+      "version": "3.0.0"
+    }
+  },
+  "provider": {
+    "name": "sample-app-provider"
+  }
+}

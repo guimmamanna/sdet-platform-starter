@@ -1,0 +1,31 @@
+services:
+  sample-app:
+    build:
+      context: .
+      dockerfile: docker/sample-app.Dockerfile
+    environment:
+      APP_PORT: 3000
+      ALLOW_TEST_RESET: "true"
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "--quiet", "http://localhost:3000/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  smoke-suite:
+    build:
+      context: .
+      dockerfile: docker/test-runner.Dockerfile
+    depends_on:
+      sample-app:
+        condition: service_healthy
+    environment:
+      APP_BASE_URL: http://sample-app:3000
+      API_BASE_URL: http://sample-app:3000/api
+      PW_DISABLE_WEBSERVER: "true"
+    command:
+      - bash
+      - -lc
+      - pytest api-tests/pytest -m smoke && npm --prefix ui-tests/playwright run test:smoke:docker

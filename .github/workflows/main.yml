@@ -1,0 +1,103 @@
+name: main-branch
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  api-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: make bootstrap
+      - run: bash ci/scripts/start-sample-app.sh main-api-sample-app.log
+      - run: mkdir -p artifacts && pytest api-tests/pytest -m "smoke or regression" --junitxml=artifacts/api-regression.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: api-regression
+          path: |
+            artifacts/api-regression.xml
+            main-api-sample-app.log
+
+  playwright-regression:
+    runs-on: ubuntu-latest
+    env:
+      PW_DISABLE_WEBSERVER: 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: make bootstrap
+      - run: cd ui-tests/playwright && npx playwright install --with-deps chromium
+      - run: bash ci/scripts/start-sample-app.sh main-playwright-sample-app.log
+      - run: npm --prefix ui-tests/playwright run test:regression
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-regression
+          path: |
+            ui-tests/playwright/playwright-report
+            ui-tests/playwright/test-results
+            main-playwright-sample-app.log
+
+  cypress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm --prefix sample-app install
+      - run: npm --prefix ui-tests/cypress install
+      - run: bash ci/scripts/start-sample-app.sh main-cypress-sample-app.log
+      - run: npm --prefix ui-tests/cypress run test:headless
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cypress
+          path: |
+            ui-tests/cypress/reports/cypress
+            ui-tests/cypress/cypress/screenshots
+            ui-tests/cypress/cypress/videos
+            main-cypress-sample-app.log
+
+  pact:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm --prefix sample-app install
+      - run: npm --prefix contract-tests/pact install
+      - run: bash ci/scripts/start-sample-app.sh main-pact-sample-app.log
+      - run: npm --prefix contract-tests/pact run test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pact
+          path: |
+            contract-tests/pact/pacts
+            main-pact-sample-app.log
+
+  docker-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose up --build --abort-on-container-exit --exit-code-from smoke-suite smoke-suite
+

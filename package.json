@@ -1,0 +1,23 @@
+{
+  "name": "sdet-platform-starter",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Production-style SDET portfolio monorepo starter",
+  "scripts": {
+    "bootstrap": "make bootstrap",
+    "dev": "make dev",
+    "lint": "make lint",
+    "smoke": "make smoke",
+    "test:api": "make test-api",
+    "test:playwright": "make test-playwright",
+    "test:cypress": "make test-cypress",
+    "test:selenium": "make test-selenium",
+    "test:contract": "make test-contract",
+    "test:performance": "make test-performance",
+    "docker:smoke": "make docker-smoke"
+  },
+  "devDependencies": {
+    "prettier": "^3.5.3"
+  }
+}
+

@@ -1,0 +1,56 @@
+name: nightly-regression
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  playwright-nightly:
+    runs-on: ubuntu-latest
+    env:
+      PW_DISABLE_WEBSERVER: 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: make bootstrap
+      - run: cd ui-tests/playwright && npx playwright install --with-deps chromium
+      - run: bash ci/scripts/start-sample-app.sh nightly-playwright-app.log
+      - run: npm --prefix ui-tests/playwright run test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nightly-playwright
+          path: |
+            ui-tests/playwright/playwright-report
+            ui-tests/playwright/test-results
+            nightly-playwright-app.log
+
+  selenium-nightly:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: npm --prefix sample-app install
+      - run: python3 -m pip install -r ui-tests/selenium/requirements.txt
+      - run: bash ci/scripts/start-sample-app.sh nightly-selenium-app.log
+      - run: pytest ui-tests/selenium/tests -m "smoke or regression"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nightly-selenium
+          path: nightly-selenium-app.log
+

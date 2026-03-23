@@ -1,0 +1,11 @@
+{
+  "users": [
+    {
+      "username": "standard_user",
+      "password": "Password123!",
+      "displayName": "Standard User",
+      "roles": ["tester"]
+    }
+  ]
+}
+

@@ -1,0 +1,46 @@
+steps:
+  - label: ":lint-roller: Lint"
+    key: lint
+    commands:
+      - "make bootstrap"
+      - "make lint"
+
+  - label: ":test_tube: API Smoke"
+    key: api-smoke
+    depends_on: lint
+    commands:
+      - "make bootstrap"
+      - "bash ci/scripts/start-sample-app.sh buildkite-sample-app.log"
+      - "pytest api-tests/pytest -m smoke --junitxml=artifacts/api-smoke.xml"
+    artifact_paths:
+      - "artifacts/api-smoke.xml"
+      - "buildkite-sample-app.log"
+
+  - label: ":sparkles: Playwright Smoke"
+    key: playwright-smoke
+    depends_on: lint
+    commands:
+      - "make bootstrap"
+      - "cd ui-tests/playwright && npx playwright install --with-deps chromium"
+      - "bash ci/scripts/start-sample-app.sh buildkite-playwright-app.log"
+      - "npm --prefix ui-tests/playwright run test:smoke"
+    artifact_paths:
+      - "ui-tests/playwright/playwright-report/**/*"
+      - "ui-tests/playwright/test-results/**/*"
+      - "buildkite-playwright-app.log"
+
+  - wait
+
+  - label: ":handshake: Pact Verification"
+    key: pact
+    depends_on:
+      - api-smoke
+      - playwright-smoke
+    commands:
+      - "make bootstrap"
+      - "bash ci/scripts/start-sample-app.sh buildkite-pact-app.log"
+      - "npm --prefix contract-tests/pact run test"
+    artifact_paths:
+      - "contract-tests/pact/pacts/**/*"
+      - "buildkite-pact-app.log"
+

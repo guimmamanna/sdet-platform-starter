@@ -1,0 +1,41 @@
+version: 0.2
+
+env:
+  variables:
+    APP_BASE_URL: http://localhost:3000
+    API_BASE_URL: http://localhost:3000/api
+    PW_DISABLE_WEBSERVER: "true"
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+      python: 3.11
+    commands:
+      - npm --prefix sample-app install
+      - npm --prefix ui-tests/playwright install
+      - npm --prefix contract-tests/pact install
+      - python3 -m pip install -r requirements-dev.txt -r api-tests/pytest/requirements.txt
+  pre_build:
+    commands:
+      - npm --prefix sample-app run dev > codebuild-sample-app.log 2>&1 &
+      - bash ci/scripts/wait-for-url.sh ${APP_BASE_URL}/health 60
+      - mkdir -p artifacts
+  build:
+    commands:
+      - pytest api-tests/pytest -m smoke --junitxml=artifacts/api-smoke.xml
+      - cd ui-tests/playwright && npx playwright install chromium
+      - npm --prefix ui-tests/playwright run test:smoke
+      - npm --prefix contract-tests/pact run test
+  post_build:
+    commands:
+      - bash ci/scripts/publish-artifacts-to-s3.sh artifacts || true
+
+artifacts:
+  files:
+    - artifacts/**/*
+    - ui-tests/playwright/playwright-report/**/*
+    - ui-tests/playwright/test-results/**/*
+    - contract-tests/pact/pacts/**/*
+    - codebuild-sample-app.log
+

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SDET Demo Inventory</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell" data-testid="app-shell">
+      <section class="hero">
+        <p class="eyebrow">SDET Demo Target</p>
+        <h1>Inventory workflows that support UI, API, contract, performance, and security testing.</h1>
+        <p class="lede">
+          The app intentionally exposes deterministic flows: login, search, add, edit, delete,
+          and observable error handling.
+        </p>
+      </section>
+
+      <section class="panel" data-testid="login-panel">
+        <div>
+          <h2>Sign in</h2>
+          <p>Use the seeded demo account to unlock the inventory workspace.</p>
+        </div>
+        <form id="login-form" class="stack">
+          <label>
+            Username
+            <input id="username" data-testid="login-username" name="username" type="text" value="standard_user" />
+          </label>
+          <label>
+            Password
+            <input
+              id="password"
+              data-testid="login-password"
+              name="password"
+              type="password"
+              value="Password123!"
+            />
+          </label>
+          <button data-testid="login-submit" type="submit">Log In</button>
+        </form>
+      </section>
+
+      <section class="message" id="message" data-testid="toast-message" aria-live="polite"></section>
+
+      <section id="workspace" class="workspace hidden" data-testid="inventory-workspace">
+        <header class="toolbar">
+          <div>
+            <h2>Inventory</h2>
+            <p id="session-user" data-testid="session-user"></p>
+          </div>
+          <form id="search-form" class="search">
+            <input
+              id="search-input"
+              data-testid="search-input"
+              name="query"
+              type="search"
+              placeholder="Search title or description"
+            />
+            <button data-testid="search-submit" type="submit">Search</button>
+            <button id="clear-search" data-testid="search-clear" type="button">Clear</button>
+          </form>
+        </header>
+
+        <section class="panel">
+          <h3 id="item-form-title">Add a new item</h3>
+          <form id="item-form" class="stack">
+            <label>
+              Title
+              <input id="item-title" data-testid="item-title" name="title" type="text" required />
+            </label>
+            <label>
+              Description
+              <textarea
+                id="item-description"
+                data-testid="item-description"
+                name="description"
+                rows="4"
+                required
+              ></textarea>
+            </label>
+            <div class="actions">
+              <button id="item-submit" data-testid="item-submit" type="submit">Add Item</button>
+              <button id="item-cancel" data-testid="item-cancel" type="button" class="secondary">Cancel</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel">
+          <div class="list-header">
+            <h3>Tracked items</h3>
+            <span id="result-count" data-testid="result-count"></span>
+          </div>
+          <ul id="item-list" class="item-list" data-testid="item-list"></ul>
+          <p id="empty-state" class="empty hidden" data-testid="empty-state">No matching items found.</p>
+        </section>
+      </section>
+    </main>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
+

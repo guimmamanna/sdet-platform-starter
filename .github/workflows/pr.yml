@@ -1,0 +1,70 @@
+name: pull-request
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: make bootstrap
+      - run: make lint
+
+  api-smoke:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: make bootstrap
+      - run: bash ci/scripts/start-sample-app.sh pr-api-sample-app.log
+      - run: mkdir -p artifacts && pytest api-tests/pytest -m smoke --junitxml=artifacts/api-smoke.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: api-smoke
+          path: |
+            artifacts/api-smoke.xml
+            pr-api-sample-app.log
+
+  playwright-smoke:
+    runs-on: ubuntu-latest
+    needs: lint
+    env:
+      PW_DISABLE_WEBSERVER: 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: make bootstrap
+      - run: cd ui-tests/playwright && npx playwright install --with-deps chromium
+      - run: bash ci/scripts/start-sample-app.sh pr-playwright-sample-app.log
+      - run: npm --prefix ui-tests/playwright run test:smoke
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-smoke
+          path: |
+            ui-tests/playwright/playwright-report
+            ui-tests/playwright/test-results
+            pr-playwright-sample-app.log
+

@@ -1,0 +1,12 @@
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["api-tests/pytest", "ui-tests/selenium"]
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+

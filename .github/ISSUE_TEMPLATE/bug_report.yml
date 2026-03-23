@@ -1,0 +1,43 @@
+name: Bug report
+description: Capture a defect, flaky test, or behavioural regression.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: Describe the observed issue and why it matters.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Include commands, environment, data setup, and any reports or screenshots.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - sample-app
+        - playwright
+        - cypress
+        - selenium
+        - api-tests
+        - pact
+        - k6
+        - zap
+        - ci-cd
+    validations:
+      required: true
+
