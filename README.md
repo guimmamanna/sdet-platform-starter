@@ -260,4 +260,5 @@ See [portfolio-projects/README.md](portfolio-projects/README.md).
 - [debugging-guide.md](docs/debugging-guide.md)
 - [aws-ready.md](docs/aws-ready.md)
 - [roadmap.md](docs/roadmap.md)
+- [backlog.md](docs/backlog.md)
 - [portfolio-projects/README.md](portfolio-projects/README.md)

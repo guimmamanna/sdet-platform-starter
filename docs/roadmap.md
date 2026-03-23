@@ -8,6 +8,8 @@
 | `v1.2 Quality Expansion` | Add accessibility, richer reports, and broader CI evidence | Planned |
 | `v1.3 Platform Depth` | Add data, mobile, and microservice extension paths | Planned |
 
+See [backlog.md](backlog.md) for the current live GitHub milestones and issue links.
+
 ## v1.2 Quality Expansion
 
 - Add visual regression snapshots for the inventory UI.
